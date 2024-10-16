@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do App</title>
+    <script>
+        let id = 0;
+        function removeElement(id){
+            const element = document.getElementById(id);
+            element.parentNode.removeChild(element);
+        }
+
+        function addToDo(){
+            const toDoTitle = document.getElementById("title").value;
+            const toDoContent = document.getElementById("toDo").value;
+            const div = document.getElementById("toDos");
+            const innerDiv = document.createElement("div");
+            innerDiv.setAttribute("id", id);
+            innerDiv.innerHTML = `${toDoTitle}<br>
+                                ${toDoContent}<br><br>
+                                <button id=${id} onClick="removeElement(this.id)">Mark As Done</button><br><br><br>
+                                </div>`
+            div.appendChild(innerDiv);
+            id++;
+        }
+       
+    </script>
+</head>
+<body>
+    <input type="text" id="title" placeholder="Title"><br><br>
+    <input type="text" id="toDo" placeholder="Enter To Do"><br><br>
+    <button onclick="addToDo()">Add To Do</button><br><br>
+    <div id="toDos"></div>
+</body>
+</html>

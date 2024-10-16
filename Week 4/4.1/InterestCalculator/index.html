@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interest Calculator</title>
+    <script>
+        async function solve(){
+            const principal = Number(document.getElementById("principal").value);
+            const rate = Number(document.getElementById("rate").value)
+            const time = Number(document.getElementById("time").value);
+
+            const response = await fetch("http://localhost:5501/solve?principal="+principal+"&rate="+rate+"&time="+time);
+            const ans = await response.json();
+            console.log(ans);
+            const answerShower = document.getElementById("finalAnswer");
+            answerShower.innerHTML = `Total principal: ${ans.totalAmount}, Actual interest: ${ans.actualInterest}%`
+        }
+    </script>
+</head>
+<body>
+    <input type="text" id="principal" placeholder="Enter principal amount"> <br><br>
+    <input type="text" id="rate" placeholder="Enter rate"><br><br>
+    <input type="text" id="time" placeholder="Enter time"><br><br>
+    <button onclick="solve()">Calculate Amount and Interest</button> <br><br>
+    <div id="finalAnswer"></div>
+</body>
+</html>

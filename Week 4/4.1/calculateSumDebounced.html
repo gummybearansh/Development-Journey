@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculate Sum</title>
+    <script>
+        // if input comes -> wait 1 secondbefore calling 
+        // if input comes before 100 ms is over -> restart 100 ms
+        let timeout;
+        function debouncedCalculateSum(){
+            clearTimeout(timeout);
+            timeout = setTimeout(function (){
+                calculateSum()
+            }, 1000)
+        }
+    
+        function calculateSum(){
+            const number1 = Number(document.getElementById("num1").value);
+            const number2 = Number(document.getElementById("num2").value);
+            const element = document.getElementById("finalSum");
+            // fetch is async, returns promise
+            fetch("http://localhost:5501/sum?a="+number1+"&b="+number2)
+                .then(function(response){
+                    // response has a lot of gibberish, see in console
+                    console.log(response);
+                    // since we know backend is sending plain-text
+                    response.text()
+                        .then(function(ans){
+                            console.log(ans);
+                            element.innerHTML = "Answer = " + ans;
+                        })
+                })
+        }
+    </script>
+</head>
+
+<body>
+
+        <input id="num1" type="text" oninput="debouncedCalculateSum()" placeholder="Enter number 1"><br>
+        <input id="num2" type="text" oninput="debouncedCalculateSum()" placeholder="Enter number 2"><br>
+        <br><br>    
+        <div id="finalSum"></div>
+</body>
+</html>
